@@ -2,142 +2,392 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>StuWellness - Sức khỏe & Giới tính</title>
-  <link rel="stylesheet" href="css/style.css" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StuWellness</title>
   <style>
-    .hero {
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      color: #333;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
     }
 
-    .highlight {
-      color: #d6336c;
+    body {
+      background: #f7fbff;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #3b82f6, #06b6d4);
+      color: white;
+      padding: 18px 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1150px;
+      margin: auto;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 30px;
       font-weight: bold;
     }
 
-    .feature-icon {
-      font-size: 40px;
-      margin-bottom: 10px;
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 18px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #fef3c7;
+    }
+
+    .hero {
+      padding: 70px 0;
+      background: linear-gradient(135deg, #eff6ff, #ecfeff);
+    }
+
+    .hero-wrap {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 35px;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-size: 44px;
+      margin-bottom: 18px;
+      color: #0f172a;
+    }
+
+    .hero-text p {
+      font-size: 18px;
+      margin-bottom: 24px;
+      color: #475569;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 22px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
+
+    .btn-outline {
+      border: 2px solid #2563eb;
+      color: #2563eb;
+      background: white;
+    }
+
+    .btn-outline:hover {
+      background: #dbeafe;
+    }
+
+    .hero-card {
+      background: white;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .hero-card h3 {
+      margin-bottom: 14px;
+      color: #0f172a;
+    }
+
+    .mini-box {
+      background: #eff6ff;
+      border-left: 5px solid #3b82f6;
+      padding: 14px;
+      border-radius: 10px;
+      margin-top: 12px;
+    }
+
+    .section {
+      padding: 65px 0;
     }
 
     .section-title {
       text-align: center;
-      margin-bottom: 30px;
+      font-size: 32px;
+      margin-bottom: 14px;
+      color: #0f172a;
     }
 
-    .quote {
-      background: #fff0f6;
-      padding: 20px;
-      border-left: 5px solid #d6336c;
-      border-radius: 10px;
-      margin-top: 30px;
+    .section-sub {
+      text-align: center;
+      max-width: 750px;
+      margin: 0 auto 35px;
+      color: #64748b;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      background: white;
+      padding: 24px;
+      border-radius: 18px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card h3 {
+      margin: 14px 0 10px;
+      color: #0f172a;
+    }
+
+    .icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #dbeafe;
+      font-size: 28px;
+    }
+
+    .stats {
+      background: linear-gradient(135deg, #2563eb, #0891b2);
+      color: white;
+      border-radius: 22px;
+      padding: 35px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      text-align: center;
+    }
+
+    .stat h2 {
+      font-size: 34px;
+      margin-bottom: 8px;
+    }
+
+    .info-box {
+      background: #fff;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+      margin-top: 25px;
+    }
+
+    .info-box ul {
+      padding-left: 20px;
+      margin-top: 10px;
+    }
+
+    .cta {
+      background: linear-gradient(135deg, #dbeafe, #cffafe);
+      border-radius: 22px;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      margin-bottom: 12px;
+      color: #0f172a;
+    }
+
+    footer {
+      background: #0f172a;
+      color: white;
+      text-align: center;
+      padding: 22px 0;
+      margin-top: 50px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-wrap,
+      .grid-3,
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-text h1 {
+        font-size: 34px;
+      }
+
+      nav a {
+        margin-left: 10px;
+      }
     }
   </style>
 </head>
 <body>
-
-<header>
-  <div class="container nav">
-    <h1 class="logo">StuWellness</h1>
-    <nav>
-      <a href="index.html">Trang chủ</a>
-      <a href="survey.html">Khảo sát</a>
-      <a href="dashboard.html">Biểu đồ</a>
-      <a href="advice.html">Tư vấn</a>
-      <a href="contact.html">Liên hệ</a>
-    </nav>
-  </div>
-</header>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="container">
-    <h2>Sức khỏe & Giáo dục giới tính học đường</h2>
-    <p>
-      Nâng cao nhận thức về <span class="highlight">sức khỏe sinh lý</span>, 
-      <span class="highlight">tâm lý</span> và 
-      <span class="highlight">giới tính an toàn</span> cho học sinh.
-    </p>
-    <div class="hero-buttons">
-      <a class="btn" href="survey.html">Bắt đầu khảo sát</a>
-      <a class="btn btn-outline" href="advice.html">Xem tư vấn</a>
+  <header>
+    <div class="container nav">
+      <div class="logo">StuWellness</div>
+      <nav>
+        <a href="#">Trang chủ</a>
+        <a href="#">Khảo sát</a>
+        <a href="#">Phân tích</a>
+        <a href="#">Tư vấn</a>
+        <a href="#">Liên hệ</a>
+      </nav>
     </div>
-  </div>
-</section>
+  </header>
 
-<!-- GIỚI THIỆU -->
-<section class="container">
-  <h2 class="section-title">Tại sao cần quan tâm?</h2>
+  <section class="hero">
+    <div class="container hero-wrap">
+      <div class="hero-text">
+        <h1>Hệ thống hỗ trợ sức khỏe học đường và giáo dục giới tính</h1>
+        <p>
+          StuWellness giúp học sinh theo dõi sức khỏe thể chất, tâm lý,
+          thói quen sinh hoạt và tiếp cận kiến thức giới tính an toàn,
+          lành mạnh, phù hợp lứa tuổi.
+        </p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-primary">Bắt đầu khảo sát</a>
+          <a href="#" class="btn btn-outline">Xem tư vấn</a>
+        </div>
+      </div>
 
-  <div class="features">
-    <div class="card">
-      <div class="feature-icon">🧠</div>
-      <h3>Sức khỏe tâm lý</h3>
-      <p>
-        Học sinh thường gặp áp lực học tập, cảm xúc tuổi teen.
-        Việc hiểu và quản lý cảm xúc giúp giảm stress và tăng hiệu quả học tập.
+      <div class="hero-card">
+        <h3>Tổng quan hệ thống</h3>
+        <p>Phân tích dữ liệu khảo sát để hỗ trợ học sinh nhận biết tình trạng của bản thân.</p>
+        <div class="mini-box">
+          <strong>Giấc ngủ:</strong> Theo dõi thói quen nghỉ ngơi
+        </div>
+        <div class="mini-box">
+          <strong>Tâm lý:</strong> Nhận biết áp lực và cảm xúc
+        </div>
+        <div class="mini-box">
+          <strong>Giới tính:</strong> Cung cấp kiến thức an toàn, phù hợp
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Chức năng nổi bật</h2>
+      <p class="section-sub">
+        Website được xây dựng theo định hướng hỗ trợ học sinh chủ động tìm hiểu,
+        tự đánh giá và nhận gợi ý chăm sóc sức khỏe.
       </p>
-    </div>
 
-    <div class="card">
-      <div class="feature-icon">⚧️</div>
-      <h3>Giáo dục giới tính</h3>
-      <p>
-        Trang bị kiến thức đúng về giới tính giúp học sinh 
-        tự bảo vệ bản thân và xây dựng mối quan hệ lành mạnh.
+      <div class="grid-3">
+        <div class="card">
+          <div class="icon">📋</div>
+          <h3>Khảo sát sức khỏe</h3>
+          <p>Thu thập dữ liệu về giấc ngủ, dinh dưỡng, vận động, cảm xúc và nhận thức giới tính.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">📊</div>
+          <h3>Phân tích trực quan</h3>
+          <p>Hiển thị biểu đồ và mức đánh giá giúp học sinh dễ hiểu, dễ theo dõi sự thay đổi của bản thân.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">💡</div>
+          <h3>Tư vấn cá nhân hóa</h3>
+          <p>Đưa ra khuyến nghị phù hợp về nghỉ ngơi, học tập, vệ sinh cá nhân và hành vi an toàn.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="stats">
+        <div class="stat">
+          <h2>4+</h2>
+          <p>Nhóm chỉ số theo dõi</p>
+        </div>
+        <div class="stat">
+          <h2>24/7</h2>
+          <p>Truy cập mọi lúc</p>
+        </div>
+        <div class="stat">
+          <h2>100%</h2>
+          <p>Nền tảng web</p>
+        </div>
+        <div class="stat">
+          <h2>1</h2>
+          <p>Hệ thống tích hợp</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Vì sao chủ đề này cần thiết?</h2>
+      <p class="section-sub">
+        Ở lứa tuổi học sinh, nhiều vấn đề về thể chất, tâm lý và giới tính rất dễ bị bỏ qua
+        hoặc hiểu chưa đúng nếu thiếu kênh hỗ trợ phù hợp.
       </p>
+
+      <div class="info-box">
+        <h3>Mục tiêu của StuWellness</h3>
+        <ul>
+          <li>Hỗ trợ học sinh nâng cao nhận thức về sức khỏe toàn diện.</li>
+          <li>Cung cấp thông tin giới tính đúng đắn, an toàn, phù hợp môi trường giáo dục.</li>
+          <li>Khuyến khích hình thành lối sống lành mạnh và chủ động chăm sóc bản thân.</li>
+          <li>Ứng dụng công nghệ số vào hỗ trợ tư vấn và theo dõi sức khỏe học đường.</li>
+        </ul>
+      </div>
     </div>
+  </section>
 
-    <div class="card">
-      <div class="feature-icon">💪</div>
-      <h3>Sức khỏe thể chất</h3>
-      <p>
-        Thói quen sinh hoạt, dinh dưỡng và vận động ảnh hưởng trực tiếp 
-        đến sự phát triển toàn diện của học sinh.
-      </p>
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <h2>Sẵn sàng trải nghiệm StuWellness?</h2>
+        <p>Bắt đầu với bảng khảo sát để hệ thống gợi ý hướng chăm sóc phù hợp cho bạn.</p>
+        <div class="btn-group" style="justify-content:center; margin-top:18px;">
+          <a href="#" class="btn btn-primary">Khảo sát ngay</a>
+          <a href="#" class="btn btn-outline">Khám phá thêm</a>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- THÔNG ĐIỆP -->
-<section class="container">
-  <h2 class="section-title">Thông điệp từ StuWellness</h2>
-
-  <div class="quote">
-    <p>
-      "Hiểu đúng về cơ thể, tôn trọng bản thân và sống lành mạnh 
-      chính là chìa khóa giúp bạn phát triển toàn diện."
-    </p>
-  </div>
-</section>
-
-<!-- MỤC TIÊU -->
-<section class="container">
-  <h2 class="section-title">Mục tiêu hệ thống</h2>
-
-  <div class="features">
-    <div class="card">
-      <h3>Khảo sát</h3>
-      <p>Thu thập dữ liệu về sức khỏe và nhận thức giới tính của học sinh.</p>
-    </div>
-
-    <div class="card">
-      <h3>Phân tích</h3>
-      <p>Hiển thị biểu đồ giúp học sinh hiểu rõ tình trạng của bản thân.</p>
-    </div>
-
-    <div class="card">
-      <h3>Tư vấn</h3>
-      <p>Đưa ra lời khuyên phù hợp về sức khỏe và hành vi an toàn.</p>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <p>© 2026 StuWellness - Student Wellness Analytics System</p>
-</footer>
-
+  <footer>
+    <p>© 2026 StuWellness - Student Wellness Analytics System</p>
+  </footer>
 </body>
 </html>
