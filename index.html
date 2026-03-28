@@ -3,22 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>StuWellness - Hệ thống hỗ trợ phân tích sức khỏe học đường</title>
+  <title>StuWellness - Giao diện tư vấn sức khỏe học đường</title>
   <style>
     :root {
-      --primary: #5b6cff;
-      --secondary: #7c4dff;
-      --accent: #16c79a;
-      --danger: #ff5a76;
-      --warning: #ffb020;
-      --dark: #1f2640;
-      --text: #334155;
-      --muted: #64748b;
-      --light: #f8fafc;
-      --card: rgba(255, 255, 255, 0.78);
-      --border: rgba(255, 255, 255, 0.4);
-      --shadow: 0 20px 50px rgba(64, 72, 140, 0.16);
-      --radius: 24px;
+      --primary: #2f7b84;
+      --primary-dark: #275f66;
+      --secondary: #d9534f;
+      --mint: #eef8f7;
+      --soft-blue: #dff1f4;
+      --text: #203338;
+      --muted: #5f7579;
+      --card: #ffffff;
+      --shadow: 0 12px 28px rgba(49, 92, 100, 0.14);
+      --radius: 22px;
     }
 
     * {
@@ -27,18 +24,17 @@
       padding: 0;
     }
 
-    html {
-      scroll-behavior: smooth;
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #f8fcfc 0%, #e6f5f6 46%, #eef8f7 100%);
+      line-height: 1.5;
+      overflow-x: hidden;
     }
 
-    body {
-      font-family: Inter, Arial, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(91, 108, 255, 0.16), transparent 30%),
-        radial-gradient(circle at top right, rgba(22, 199, 154, 0.14), transparent 25%),
-        linear-gradient(180deg, #f7f8ff 0%, #f6fbff 38%, #ffffff 100%);
-      line-height: 1.6;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     img {
@@ -46,1086 +42,535 @@
       display: block;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
     .container {
-      width: min(1180px, calc(100% - 32px));
+      width: min(1180px, calc(100% - 30px));
       margin: 0 auto;
     }
 
-    .glass {
-      background: var(--card);
-      backdrop-filter: blur(18px);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      border-radius: var(--radius);
+    .top-banner {
+      background: linear-gradient(90deg, #c9e5ea, #bde2d2);
+      height: 28px;
+      position: relative;
+      border-bottom-left-radius: 36px;
     }
 
-    .section {
-      padding: 88px 0;
-    }
-
-    .section-title {
-      font-size: clamp(1.9rem, 3vw, 2.8rem);
-      line-height: 1.2;
-      color: var(--dark);
-      margin-bottom: 14px;
-    }
-
-    .section-desc {
-      max-width: 720px;
-      color: var(--muted);
-      margin-bottom: 36px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(91, 108, 255, 0.1);
-      color: var(--primary);
-      padding: 8px 14px;
+    .sos-btn {
+      position: absolute;
+      right: 24px;
+      top: 3px;
+      background: #d14f49;
+      color: #fff;
+      padding: 4px 14px;
       border-radius: 999px;
-      font-size: 0.92rem;
-      font-weight: 700;
-      margin-bottom: 16px;
+      font-size: 12px;
+      font-weight: bold;
+      box-shadow: 0 8px 18px rgba(209, 79, 73, 0.25);
     }
 
     header {
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(255, 255, 255, 0.72);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(226, 232, 240, 0.75);
     }
 
-    .nav {
+    .navbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 0;
-      gap: 16px;
+      gap: 18px;
+      padding: 12px 0;
     }
 
     .logo {
       display: flex;
       align-items: center;
       gap: 12px;
-      font-weight: 800;
-      color: var(--dark);
-      letter-spacing: 0.2px;
+      min-width: 210px;
     }
 
-    .logo-mark {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
+    .logo-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 36% 36%, #ffffff 0, #ffffff 30%, #d9f0f2 31%, #d9f0f2 100%);
+      border: 3px solid #9ed0d4;
       display: grid;
       place-items: center;
-      color: white;
-      font-weight: 900;
-      box-shadow: 0 12px 26px rgba(91, 108, 255, 0.35);
+      color: var(--primary);
+      font-size: 26px;
+    }
+
+    .logo-text {
+      font-weight: 800;
+      color: var(--primary-dark);
+      line-height: 1.1;
     }
 
     .nav-links {
       display: flex;
+      align-items: center;
       gap: 24px;
-      color: var(--muted);
-      font-weight: 600;
+      font-size: 14px;
+      font-weight: 700;
+      color: #35555b;
       flex-wrap: wrap;
       justify-content: center;
     }
 
+    .nav-links a.active,
     .nav-links a:hover {
       color: var(--primary);
     }
 
-    .nav-cta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 11px 18px;
+    .appointment-btn {
+      border: 2px solid #7ba8ae;
+      color: var(--primary-dark);
+      padding: 10px 18px;
       border-radius: 999px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: white;
       font-weight: 700;
-      box-shadow: 0 10px 24px rgba(92, 107, 255, 0.26);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .nav-cta:hover,
-    .btn:hover,
-    .mini-btn:hover,
-    .submit-btn:hover {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 16px 30px rgba(92, 107, 255, 0.24);
+      white-space: nowrap;
     }
 
     .hero {
-      padding: 68px 0 38px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.08fr 0.92fr;
-      gap: 28px;
-      align-items: center;
-    }
-
-    .hero h1 {
-      font-size: clamp(2.4rem, 5vw, 4.4rem);
-      line-height: 1.06;
-      color: var(--dark);
-      margin-bottom: 18px;
-    }
-
-    .hero h1 span {
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero p {
-      color: var(--muted);
-      font-size: 1.05rem;
-      max-width: 620px;
-      margin-bottom: 24px;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 26px;
-    }
-
-    .btn,
-    .mini-btn,
-    .submit-btn {
-      border: none;
-      cursor: pointer;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px 22px;
-      border-radius: 16px;
-      font-weight: 800;
-      font-size: 0.98rem;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: white;
-      box-shadow: 0 12px 26px rgba(91, 108, 255, 0.24);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.8);
-      color: var(--dark);
-      border: 1px solid rgba(148, 163, 184, 0.2);
-    }
-
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 8px;
-    }
-
-    .stat-card {
-      padding: 18px;
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.78);
-      border: 1px solid rgba(255,255,255,0.7);
-      box-shadow: var(--shadow);
-    }
-
-    .stat-card h3 {
-      font-size: 1.5rem;
-      color: var(--dark);
-    }
-
-    .stat-card p {
-      margin: 6px 0 0;
-      font-size: 0.95rem;
-    }
-
-    .hero-panel {
-      padding: 24px;
       position: relative;
+      min-height: 460px;
+      background:
+        linear-gradient(rgba(255,255,255,0.08), rgba(255,255,255,0.08)),
+        url('https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
       overflow: hidden;
     }
 
-    .hero-panel::before {
-      content: "";
+    .hero::before {
+      content: '';
       position: absolute;
-      inset: auto -30px -30px auto;
-      width: 170px;
-      height: 170px;
-      background: radial-gradient(circle, rgba(22,199,154,0.24), transparent 70%);
-      border-radius: 999px;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0.18));
     }
 
-    .dashboard-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 22px;
-      gap: 12px;
-    }
-
-    .dashboard-top h3 {
-      color: var(--dark);
-      font-size: 1.15rem;
-    }
-
-    .pill {
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--accent);
-      background: rgba(22, 199, 154, 0.12);
-    }
-
-    .health-ring {
-      width: 170px;
-      height: 170px;
-      margin: 0 auto 18px;
-      border-radius: 50%;
-      background: conic-gradient(var(--accent) 0 76%, rgba(226,232,240,0.9) 76% 100%);
-      display: grid;
-      place-items: center;
-      position: relative;
-    }
-
-    .health-ring::after {
-      content: "";
-      width: 122px;
-      height: 122px;
-      border-radius: 50%;
-      background: white;
-      position: absolute;
-    }
-
-    .health-ring .value {
+    .hero-content {
       position: relative;
       z-index: 1;
       text-align: center;
+      padding-top: 60px;
     }
 
-    .health-ring .value strong {
-      display: block;
-      font-size: 2rem;
-      color: var(--dark);
-      line-height: 1;
+    .hero-title {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 900;
+      color: #111;
+      margin-bottom: 10px;
+      text-transform: uppercase;
     }
 
-    .health-ring .value span {
-      font-size: 0.92rem;
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .bars {
-      display: grid;
-      gap: 14px;
-      margin-top: 20px;
-    }
-
-    .bar-item {
-      display: grid;
-      grid-template-columns: 104px 1fr 48px;
-      gap: 12px;
-      align-items: center;
-      font-size: 0.94rem;
-      color: var(--muted);
-    }
-
-    .bar-track {
-      height: 10px;
-      background: #e5eaf4;
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .bar-fill {
-      height: 100%;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-    }
-
-    .feature-grid,
-    .advice-grid,
-    .knowledge-grid,
-    .contact-grid,
-    .footer-grid {
-      display: grid;
-      gap: 20px;
-    }
-
-    .feature-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .feature-card,
-    .advice-card,
-    .knowledge-card,
-    .contact-card {
-      padding: 24px;
-    }
-
-    .icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 18px;
-      display: grid;
-      place-items: center;
-      margin-bottom: 14px;
-      font-size: 1.4rem;
-      background: linear-gradient(135deg, rgba(91,108,255,0.14), rgba(22,199,154,0.16));
-    }
-
-    .feature-card h3,
-    .advice-card h3,
-    .knowledge-card h3,
-    .contact-card h3 {
-      color: var(--dark);
+    .hero-subtitle {
+      font-size: 22px;
+      color: #111;
       margin-bottom: 8px;
-      font-size: 1.12rem;
-    }
-
-    .feature-card p,
-    .advice-card p,
-    .knowledge-card p,
-    .contact-card p {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .survey-wrap {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 24px;
-      align-items: start;
-    }
-
-    .survey-card,
-    .result-card {
-      padding: 28px;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
-    }
-
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .field label {
       font-weight: 700;
-      color: var(--dark);
-      font-size: 0.95rem;
     }
 
-    .field input,
-    .field select,
-    .field textarea {
-      width: 100%;
-      padding: 13px 14px;
-      border-radius: 16px;
-      border: 1px solid #dbe3f0;
-      background: rgba(255,255,255,0.92);
-      color: var(--text);
-      font-size: 0.96rem;
-      outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    .hero-desc {
+      color: #2d4348;
+      font-size: 20px;
+      margin-bottom: 26px;
     }
 
-    .field input:focus,
-    .field select:focus,
-    .field textarea:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(91,108,255,0.12);
-    }
-
-    .field.full {
-      grid-column: 1 / -1;
-    }
-
-    .submit-btn {
-      margin-top: 18px;
-      width: 100%;
-      padding: 15px 18px;
-      border-radius: 18px;
-      font-size: 1rem;
-      font-weight: 800;
-      color: white;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      box-shadow: 0 14px 28px rgba(91,108,255,0.24);
-    }
-
-    .result-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .score-box {
-      padding: 18px;
-      border-radius: 22px;
-      background: linear-gradient(135deg, rgba(91,108,255,0.1), rgba(22,199,154,0.12));
-      margin-bottom: 20px;
-    }
-
-    .score-box strong {
-      display: block;
-      font-size: 2rem;
-      color: var(--dark);
-      line-height: 1.1;
-      margin-bottom: 6px;
-    }
-
-    .status {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-weight: 800;
-      font-size: 0.92rem;
-    }
-
-    .status.good {
-      background: rgba(22, 199, 154, 0.12);
-      color: var(--accent);
-    }
-
-    .status.warn {
-      background: rgba(255, 176, 32, 0.14);
-      color: #b56d00;
-    }
-
-    .status.high {
-      background: rgba(255, 90, 118, 0.12);
-      color: var(--danger);
-    }
-
-    .result-list {
-      display: grid;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    .result-item {
-      padding: 14px 16px;
-      background: rgba(248, 250, 252, 0.9);
-      border-radius: 16px;
-      border: 1px solid #edf2f7;
-      font-size: 0.95rem;
-    }
-
-    .result-item strong {
-      color: var(--dark);
-    }
-
-    .advice-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .knowledge-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .knowledge-card .tag {
+    .hero-btn {
       display: inline-block;
-      padding: 6px 12px;
+      background: linear-gradient(180deg, #eef7f7, #d6ecef);
+      color: var(--primary-dark);
+      padding: 16px 34px;
       border-radius: 999px;
-      background: rgba(124,77,255,0.1);
-      color: var(--secondary);
-      font-weight: 700;
-      font-size: 0.82rem;
-      margin-bottom: 12px;
+      font-weight: 800;
+      border: 2px solid rgba(73, 127, 136, 0.25);
+      box-shadow: 0 10px 20px rgba(48, 96, 102, 0.18);
     }
 
-    .knowledge-card a {
-      display: inline-flex;
-      margin-top: 14px;
-      color: var(--primary);
-      font-weight: 700;
-    }
-
-    .mini-btn {
-      padding: 12px 18px;
-      border-radius: 14px;
-      color: white;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      margin-top: 14px;
-    }
-
-    .contact-grid {
-      grid-template-columns: 1.05fr 0.95fr;
-      align-items: start;
-    }
-
-    .footer {
-      padding: 38px 0 50px;
-    }
-
-    .footer-grid {
-      grid-template-columns: 1.2fr 0.8fr;
-      padding: 26px;
-      align-items: center;
-    }
-
-    .footer p,
-    .footer li {
-      color: var(--muted);
-    }
-
-    .footer ul {
-      list-style: none;
-      display: grid;
-      gap: 8px;
-    }
-
-    .floating-card {
+    .float-heart,
+    .float-leaf {
       position: absolute;
-      background: white;
-      box-shadow: 0 18px 32px rgba(31,38,64,0.12);
-      border-radius: 18px;
-      padding: 14px 16px;
-      font-size: 0.9rem;
-      color: var(--dark);
-      animation: floatY 4s ease-in-out infinite;
+      font-size: 28px;
+      opacity: 0.8;
+      z-index: 1;
+      animation: floaty 4s ease-in-out infinite;
     }
 
-    .float-one {
-      top: 18px;
-      right: -8px;
-    }
+    .float-heart.one { top: 94px; left: 120px; }
+    .float-heart.two { top: 160px; right: 150px; animation-delay: 1s; }
+    .float-heart.three { bottom: 80px; right: 90px; animation-delay: 1.8s; }
+    .float-leaf.one { top: 160px; left: 58px; }
+    .float-leaf.two { bottom: 30px; left: 140px; animation-delay: 1.2s; }
+    .float-leaf.three { bottom: 140px; right: 260px; animation-delay: 2s; }
 
-    .float-two {
-      left: -8px;
-      bottom: 30px;
-      animation-delay: 1.4s;
-    }
-
-    @keyframes floatY {
+    @keyframes floaty {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-8px); }
     }
 
-    @media (max-width: 1100px) {
-      .feature-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .hero-grid,
-      .survey-wrap,
-      .contact-grid,
-      .footer-grid,
-      .advice-grid,
-      .knowledge-grid {
-        grid-template-columns: 1fr;
-      }
+    .main-section {
+      position: relative;
+      background: linear-gradient(180deg, #dbf0f3 0%, #eef8f7 100%);
+      padding: 28px 0 40px;
+      overflow: hidden;
     }
 
-    @media (max-width: 760px) {
-      .nav {
-        flex-direction: column;
+    .main-section::before {
+      content: '';
+      position: absolute;
+      left: -120px;
+      top: -30px;
+      width: 380px;
+      height: 180px;
+      background: rgba(255,255,255,0.34);
+      border-radius: 50%;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 40px;
+      font-weight: 900;
+      color: #111;
+      margin-bottom: 22px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 20px 18px 18px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      border: 1px solid rgba(105, 154, 161, 0.1);
+    }
+
+    .card-icon {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 12px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #f4fbfb, #e8f5f6);
+      display: grid;
+      place-items: center;
+      font-size: 44px;
+    }
+
+    .card h3 {
+      font-size: 26px;
+      margin-bottom: 14px;
+      line-height: 1.25;
+    }
+
+    .card-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      box-shadow: 0 8px 16px rgba(47, 123, 132, 0.24);
+    }
+
+    .highlights-title {
+      text-align: center;
+      font-size: 34px;
+      font-weight: 900;
+      color: #111;
+      margin: 18px 0 22px;
+    }
+
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .highlight-item h4 {
+      font-size: 28px;
+      margin-bottom: 8px;
+      color: #1c2c31;
+    }
+
+    .highlight-item p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    .side-actions {
+      position: fixed;
+      right: 18px;
+      top: 185px;
+      z-index: 60;
+      display: grid;
+      gap: 12px;
+    }
+
+    .side-box {
+      width: 112px;
+      min-height: 98px;
+      border-radius: 14px;
+      box-shadow: 0 10px 24px rgba(41, 74, 80, 0.18);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px;
+      line-height: 1.3;
+      color: #12363b;
+      background: #fff;
+    }
+
+    .side-box.red {
+      background: #d94b43;
+      color: #fff;
+    }
+
+    .side-box small {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      opacity: 0.95;
+    }
+
+    .bottom-illustrations {
+      position: relative;
+      min-height: 120px;
+    }
+
+    .corner-people {
+      position: absolute;
+      bottom: -10px;
+      width: 140px;
+      text-align: center;
+      color: var(--primary-dark);
+      font-size: 64px;
+    }
+
+    .corner-people.left { left: 10px; }
+    .corner-people.right { right: 10px; }
+
+    footer {
+      background: #d9eff1;
+      border-top: 1px solid rgba(72, 118, 125, 0.15);
+      padding: 12px 0;
+      font-size: 16px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      color: #35555b;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 10px;
+      font-size: 22px;
+    }
+
+    .chat-bubble {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      background: white;
+      color: var(--primary-dark);
+      border-radius: 999px;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.16);
+      padding: 10px 16px;
+      font-weight: 700;
+      z-index: 70;
+    }
+
+    @media (max-width: 1100px) {
+      .cards,
+      .highlights {
+        grid-template-columns: repeat(2, 1fr);
       }
 
       .nav-links {
         gap: 14px;
       }
+    }
+
+    @media (max-width: 820px) {
+      .navbar {
+        flex-direction: column;
+      }
+
+      .side-actions {
+        display: none;
+      }
 
       .hero {
-        padding-top: 34px;
+        min-height: 380px;
       }
 
-      .hero-stats,
-      .form-grid,
-      .feature-grid {
+      .hero-content {
+        padding-top: 42px;
+      }
+
+      .hero-desc {
+        font-size: 18px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .cards,
+      .highlights {
         grid-template-columns: 1fr;
       }
 
-      .bar-item {
-        grid-template-columns: 1fr;
+      .hero-title {
+        font-size: 28px;
       }
 
-      .floating-card {
+      .hero-subtitle,
+      .hero-desc {
+        font-size: 16px;
+      }
+
+      .appointment-btn {
+        padding: 9px 14px;
+      }
+
+      .footer-inner {
+        justify-content: center;
+        text-align: center;
+      }
+
+      .corner-people {
         display: none;
       }
     }
   </style>
 </head>
 <body>
+  <div class="top-banner">
+    <a href="#" class="sos-btn">🆘 HỖ TRỢ KHẨN CẤP (SOS)</a>
+  </div>
+
   <header>
-    <div class="container nav">
-      <a href="#home" class="logo">
-        <div class="logo-mark">S</div>
-        <div>
-          <div>StuWellness</div>
-          <small style="color: var(--muted); font-weight: 600;">Student Wellness Analytics System</small>
+    <div class="container navbar">
+      <div class="logo">
+        <div class="logo-icon">💗</div>
+        <div class="logo-text">
+          GÓC TÂM HỒN
         </div>
-      </a>
+      </div>
+
       <nav class="nav-links">
-        <a href="#features">Chức năng</a>
-        <a href="#survey">Khảo sát</a>
-        <a href="#dashboard">Phân tích</a>
-        <a href="#advice">Tư vấn</a>
-        <a href="#knowledge">Kiến thức</a>
-        <a href="#contact">Liên hệ</a>
+        <a class="active" href="#">TRANG CHỦ</a>
+        <a href="#">GIỚI THIỆU</a>
+        <a href="#">DỊCH VỤ ▾</a>
+        <a href="#">TÀI LIỆU &amp; GÓC CHIA SẺ</a>
+        <a href="#">LIÊN HỆ</a>
       </nav>
-      <a class="nav-cta" href="#survey">Khảo sát ngay</a>
+
+      <a class="appointment-btn" href="#">🗓️ ĐẶT LỊCH HẸN</a>
     </div>
   </header>
 
-  <main>
-    <section class="hero" id="home">
-      <div class="container hero-grid">
-        <div>
-          <div class="badge">✨ Hệ thống hỗ trợ phân tích sức khỏe học đường</div>
-          <h1>Hiểu sức khỏe của bạn bằng <span>dữ liệu</span>, trực quan hơn bằng <span>AI</span>.</h1>
-          <p>
-            StuWellness giúp học sinh, sinh viên tự đánh giá thói quen sinh hoạt, mức độ căng thẳng,
-            chất lượng giấc ngủ và tình trạng sức khỏe tinh thần để nhận kết quả phân tích cùng gợi ý phù hợp.
-          </p>
-          <div class="hero-actions">
-            <a href="#survey" class="btn btn-primary">Bắt đầu khảo sát</a>
-            <a href="#dashboard" class="btn btn-secondary">Xem bảng phân tích</a>
-          </div>
-          <div class="hero-stats">
-            <div class="stat-card">
-              <h3>5+</h3>
-              <p>Nhóm chỉ số theo dõi: ngủ, vận động, stress, màn hình, dinh dưỡng</p>
-            </div>
-            <div class="stat-card">
-              <h3>AI</h3>
-              <p>Gợi ý cá nhân hóa dựa trên dữ liệu người dùng nhập vào</p>
-            </div>
-            <div class="stat-card">
-              <h3>Trực quan</h3>
-              <p>Thể hiện kết quả bằng điểm sức khỏe, mức cảnh báo và nhận xét nhanh</p>
-            </div>
-          </div>
+  <section class="hero">
+    <div class="float-heart one">💛</div>
+    <div class="float-heart two">💗</div>
+    <div class="float-heart three">🤍</div>
+    <div class="float-leaf one">🌿</div>
+    <div class="float-leaf two">🍃</div>
+    <div class="float-leaf three">🌱</div>
+
+    <div class="container hero-content">
+      <div class="hero-title">LUÔN CÓ NGƯỜI LẮNG NGHE BẠN.</div>
+      <div class="hero-desc">Nơi chia sẻ, thấu hiểu và đồng hành cùng sức khỏe tâm hồn học sinh.</div>
+      <a href="#" class="hero-btn">BẮT ĐẦU CHIA SẺ NGAY</a>
+    </div>
+  </section>
+
+  <div class="side-actions">
+    <a href="#" class="side-box red">↪<br>THOÁT NHANH<br><small>(Quick Exit)</small></a>
+    <a href="#" class="side-box">💬<br>HỘP THƯ TÂM SỰ<br><small>(Anonymous Chat)</small></a>
+    <a href="#" class="side-box">🧠<br>TEST TÂM LÝ VUI</a>
+  </div>
+
+  <section class="main-section">
+    <div class="container">
+      <h2 class="section-title">DỊCH VỤ CHÍNH</h2>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">🧑‍🏫</div>
+          <h3>Tâm lý Học đường</h3>
+          <a href="#" class="card-btn">XEM CHI TIẾT</a>
         </div>
-
-        <div class="glass hero-panel" id="dashboard">
-          <div class="floating-card float-one">🟢 Chỉ số hiện tại: 76/100</div>
-          <div class="floating-card float-two">💤 Gợi ý: ngủ trước 23h</div>
-          <div class="dashboard-top">
-            <div>
-              <h3>Bảng điều khiển sức khỏe</h3>
-              <p style="color: var(--muted); font-size: 0.92rem;">Mô phỏng giao diện theo dõi sức khỏe học đường</p>
-            </div>
-            <div class="pill">Ổn định</div>
-          </div>
-
-          <div class="health-ring">
-            <div class="value">
-              <strong>76</strong>
-              <span>Health Score</span>
-            </div>
-          </div>
-
-          <div class="bars">
-            <div class="bar-item">
-              <span>Giấc ngủ</span>
-              <div class="bar-track"><div class="bar-fill" style="width: 72%"></div></div>
-              <strong>72%</strong>
-            </div>
-            <div class="bar-item">
-              <span>Vận động</span>
-              <div class="bar-track"><div class="bar-fill" style="width: 64%"></div></div>
-              <strong>64%</strong>
-            </div>
-            <div class="bar-item">
-              <span>Tâm trạng</span>
-              <div class="bar-track"><div class="bar-fill" style="width: 80%"></div></div>
-              <strong>80%</strong>
-            </div>
-            <div class="bar-item">
-              <span>Stress</span>
-              <div class="bar-track"><div class="bar-fill" style="width: 58%"></div></div>
-              <strong>58%</strong>
-            </div>
-          </div>
+        <div class="card">
+          <div class="card-icon">🙋</div>
+          <h3>Căng thẳng &amp; Âu lo</h3>
+          <a href="#" class="card-btn">XEM CHI TIẾT</a>
+        </div>
+        <div class="card">
+          <div class="card-icon">👥</div>
+          <h3>Mối quan hệ &amp; Giới tính</h3>
+          <a href="#" class="card-btn">XEM CHI TIẾT</a>
+        </div>
+        <div class="card">
+          <div class="card-icon">🧭</div>
+          <h3>Định hướng Tương lai</h3>
+          <a href="#" class="card-btn">XEM CHI TIẾT</a>
         </div>
       </div>
-    </section>
 
-    <section class="section" id="features">
-      <div class="container">
-        <div class="badge">Tính năng nổi bật</div>
-        <h2 class="section-title">Web không chỉ để đọc, mà phải tương tác và tạo giá trị.</h2>
-        <p class="section-desc">
-          Phần này giúp sản phẩm bớt khô khan hơn nhờ có quy trình trải nghiệm rõ ràng: người dùng khảo sát,
-          hệ thống phân tích, hiển thị điểm sức khỏe, sau đó đưa ra khuyến nghị và thư viện kiến thức.
-        </p>
-
-        <div class="feature-grid">
-          <div class="glass feature-card">
-            <div class="icon">📝</div>
-            <h3>Khảo sát nhanh</h3>
-            <p>Đánh giá thói quen ngủ nghỉ, sử dụng điện thoại, vận động, mức độ căng thẳng và tâm trạng.</p>
-          </div>
-          <div class="glass feature-card">
-            <div class="icon">📊</div>
-            <h3>Phân tích trực quan</h3>
-            <p>Hiển thị kết quả qua điểm sức khỏe, trạng thái cảnh báo và bảng tóm tắt dễ hiểu.</p>
-          </div>
-          <div class="glass feature-card">
-            <div class="icon">🤖</div>
-            <h3>Gợi ý thông minh</h3>
-            <p>Đưa ra khuyến nghị phù hợp theo dữ liệu người dùng nhập vào, dễ triển khai như một AI rule-based.</p>
-          </div>
-          <div class="glass feature-card">
-            <div class="icon">📚</div>
-            <h3>Kho kiến thức</h3>
-            <p>Tích hợp nội dung về sức khỏe tuổi teen, giảm stress, dinh dưỡng và kỹ năng tự chăm sóc bản thân.</p>
-          </div>
+      <h2 class="highlights-title">ĐIỂM NỔI BẬT</h2>
+      <div class="highlights">
+        <div class="highlight-item">
+          <h4>Chuyên gia</h4>
+          <p>Tận tâm &amp; Giàu kinh nghiệm</p>
+        </div>
+        <div class="highlight-item">
+          <h4>Môi trường</h4>
+          <p>An toàn &amp; Tuyệt đối Bảo mật</p>
+        </div>
+        <div class="highlight-item">
+          <h4>Hỗ trợ Linh hoạt</h4>
+          <p>(Trực tuyến &amp; Trực tiếp)</p>
+        </div>
+        <div class="highlight-item">
+          <h4>Hộp thư</h4>
+          <p>Ẩn danh &amp; Thoát Nhanh</p>
         </div>
       </div>
-    </section>
 
-    <section class="section" id="survey">
-      <div class="container survey-wrap">
-        <div class="glass survey-card">
-          <div class="badge">Khảo sát cá nhân</div>
-          <h2 class="section-title" style="font-size: clamp(1.8rem, 3vw, 2.5rem);">Nhập thông tin để hệ thống phân tích.</h2>
-          <p class="section-desc" style="margin-bottom: 22px; max-width: 100%;">
-            Mẫu này có thể dùng trực tiếp trên web tĩnh. Sau này bạn có thể nối với Google Sheets, Firebase hoặc database để lưu dữ liệu khảo sát thật.
-          </p>
-
-          <form id="wellnessForm">
-            <div class="form-grid">
-              <div class="field">
-                <label for="name">Họ và tên</label>
-                <input id="name" type="text" placeholder="Nhập họ tên" />
-              </div>
-              <div class="field">
-                <label for="role">Đối tượng</label>
-                <select id="role">
-                  <option value="Học sinh">Học sinh</option>
-                  <option value="Sinh viên">Sinh viên</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <label for="sleep">Bạn ngủ bao nhiêu giờ/ngày?</label>
-                <select id="sleep">
-                  <option value="4">Dưới 5 giờ</option>
-                  <option value="6">Khoảng 5-6 giờ</option>
-                  <option value="8" selected>Khoảng 7-8 giờ</option>
-                  <option value="9">Trên 8 giờ</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <label for="exercise">Bạn vận động bao nhiêu phút/ngày?</label>
-                <select id="exercise">
-                  <option value="20">Dưới 20 phút</option>
-                  <option value="40" selected>Khoảng 20-40 phút</option>
-                  <option value="60">Khoảng 40-60 phút</option>
-                  <option value="80">Trên 60 phút</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <label for="screen">Thời gian dùng điện thoại ngoài học tập?</label>
-                <select id="screen">
-                  <option value="8">Trên 6 giờ</option>
-                  <option value="6">Khoảng 4-6 giờ</option>
-                  <option value="4" selected>Khoảng 2-4 giờ</option>
-                  <option value="2">Dưới 2 giờ</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <label for="stress">Mức độ căng thẳng học tập?</label>
-                <select id="stress">
-                  <option value="9">Rất cao</option>
-                  <option value="7">Khá cao</option>
-                  <option value="4" selected>Trung bình</option>
-                  <option value="2">Thấp</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <label for="mood">Tâm trạng gần đây của bạn?</label>
-                <select id="mood">
-                  <option value="2">Thường buồn/chán</option>
-                  <option value="4">Khá thất thường</option>
-                  <option value="7" selected>Tương đối ổn</option>
-                  <option value="9">Tích cực, vui vẻ</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <label for="breakfast">Bạn có thường xuyên ăn sáng không?</label>
-                <select id="breakfast">
-                  <option value="2">Hiếm khi</option>
-                  <option value="5">Thỉnh thoảng</option>
-                  <option value="8" selected>Thường xuyên</option>
-                </select>
-              </div>
-
-              <div class="field full">
-                <label for="note">Điều bạn đang lo lắng nhất hiện tại</label>
-                <textarea id="note" rows="4" placeholder="Ví dụ: áp lực bài tập, thiếu ngủ, thi cử, mệt mỏi... "></textarea>
-              </div>
-            </div>
-
-            <button class="submit-btn" type="submit">Nhận kết quả phân tích ngay</button>
-          </form>
-        </div>
-
-        <div class="glass result-card">
-          <div class="result-head">
-            <div>
-              <div class="badge" style="margin-bottom: 10px;">Kết quả tức thì</div>
-              <h2 style="font-size: 1.7rem; color: var(--dark); line-height: 1.2;">Bảng phân tích cá nhân</h2>
-            </div>
-            <div id="resultStatus" class="status good">🟢 Ổn định</div>
-          </div>
-
-          <div class="score-box">
-            <small style="color: var(--muted); font-weight: 700;">Health Score</small>
-            <strong id="healthScore">76/100</strong>
-            <p id="healthSummary" style="color: var(--muted);">
-              Bạn đang có nền tảng sức khỏe tương đối tốt, tuy nhiên vẫn cần chú ý đến cân bằng giữa học tập và nghỉ ngơi.
-            </p>
-          </div>
-
-          <div class="result-list" id="resultList">
-            <div class="result-item"><strong>Giấc ngủ:</strong> Đã khá ổn, nên duy trì giờ ngủ đều đặn.</div>
-            <div class="result-item"><strong>Mức stress:</strong> Ở mức trung bình, vẫn cần thời gian thư giãn sau học tập.</div>
-            <div class="result-item"><strong>Thiết bị số:</strong> Thời gian sử dụng chưa quá cao, nên có thêm khoảng nghỉ mắt.</div>
-          </div>
-
-          <h3 style="margin: 20px 0 12px; color: var(--dark);">Gợi ý từ StuWellness AI</h3>
-          <div class="result-list" id="aiAdvice">
-            <div class="result-item">💡 Ngủ trước 23h ít nhất 4 ngày/tuần để cải thiện chất lượng tập trung.</div>
-            <div class="result-item">💡 Duy trì 20-30 phút vận động nhẹ mỗi ngày.</div>
-            <div class="result-item">💡 Khi thấy căng thẳng, hãy nghỉ ngắn 5-10 phút sau mỗi phiên học.</div>
-          </div>
-        </div>
+      <div class="bottom-illustrations">
+        <div class="corner-people left">🧑‍🎓👩‍🎓</div>
+        <div class="corner-people right">👩‍⚕️🧑</div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section" id="advice">
-      <div class="container">
-        <div class="badge">Tư vấn cá nhân hóa</div>
-        <h2 class="section-title">Ba nhóm gợi ý quan trọng nhất cho người học.</h2>
-        <p class="section-desc">
-          Đây là khu vực trình bày khuyến nghị sau phân tích. Khi đi thi, bạn có thể nhấn mạnh rằng hệ thống không chẩn đoán bệnh mà hỗ trợ nhận diện sớm thói quen chưa tốt.
-        </p>
-
-        <div class="advice-grid">
-          <div class="glass advice-card">
-            <div class="icon">😴</div>
-            <h3>Cải thiện giấc ngủ</h3>
-            <p>Ưu tiên ngủ trước 23h, hạn chế màn hình trước khi ngủ và duy trì thời gian ngủ từ 7-8 giờ mỗi ngày.</p>
-          </div>
-          <div class="glass advice-card">
-            <div class="icon">🧘</div>
-            <h3>Giảm căng thẳng</h3>
-            <p>Sắp xếp thời gian học hợp lý, áp dụng nghỉ ngắn xen kẽ và chia nhỏ nhiệm vụ để giảm áp lực thi cử.</p>
-          </div>
-          <div class="glass advice-card">
-            <div class="icon">🥗</div>
-            <h3>Chăm sóc thể chất</h3>
-            <p>Duy trì ăn sáng, uống đủ nước, vận động nhẹ và tránh ngồi quá lâu liên tục khi học tập.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="knowledge">
-      <div class="container">
-        <div class="badge">Thư viện kiến thức</div>
-        <h2 class="section-title">Thêm nội dung để web vừa đẹp vừa có chiều sâu giáo dục.</h2>
-        <p class="section-desc">
-          Bạn có thể thay các bài mẫu dưới đây bằng bài viết thật, infographic, video hoặc tài liệu chính thống về sức khỏe học đường.
-        </p>
-
-        <div class="knowledge-grid">
-          <div class="glass knowledge-card">
-            <span class="tag">Giấc ngủ</span>
-            <h3>Vì sao học sinh thiếu ngủ dễ giảm tập trung?</h3>
-            <p>Giấc ngủ ảnh hưởng đến trí nhớ, khả năng tiếp thu và điều hòa cảm xúc. Đây là một chuyên đề rất nên có trên web.</p>
-            <a href="#contact">Xem thêm nội dung →</a>
-          </div>
-          <div class="glass knowledge-card">
-            <span class="tag">Tâm lý học đường</span>
-            <h3>Dấu hiệu căng thẳng học tập cần chú ý</h3>
-            <p>Khó ngủ, dễ cáu gắt, lo âu kéo dài, thiếu động lực học tập là những tín hiệu nên được hỗ trợ sớm.</p>
-            <a href="#contact">Đọc bài viết →</a>
-          </div>
-          <div class="glass knowledge-card">
-            <span class="tag">Sống lành mạnh</span>
-            <h3>5 thói quen nhỏ giúp học tập hiệu quả hơn</h3>
-            <p>Ngủ đúng giờ, uống đủ nước, vận động nhẹ, giảm thời gian lướt mạng và chia lịch học thành từng chặng ngắn.</p>
-            <a href="#contact">Khám phá ngay →</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="contact">
-      <div class="container contact-grid">
-        <div class="glass contact-card">
-          <div class="badge">Liên hệ & phản hồi</div>
-          <h2 class="section-title" style="font-size: clamp(1.8rem, 3vw, 2.5rem);">Kết nối để hoàn thiện hệ thống tốt hơn.</h2>
-          <p class="section-desc" style="max-width: 100%; margin-bottom: 18px;">
-            Khu vực này phù hợp để gắn Google Form, email hỗ trợ, hộp thư tư vấn hoặc phản hồi từ học sinh và giáo viên.
-          </p>
-          <div class="result-list">
-            <div class="result-item"><strong>Email dự án:</strong> stuwellness@school.edu.vn</div>
-            <div class="result-item"><strong>Đối tượng phục vụ:</strong> học sinh THPT, sinh viên, giáo viên phụ trách công tác tư vấn học đường</div>
-            <div class="result-item"><strong>Mục tiêu:</strong> phát hiện sớm dấu hiệu sức khỏe chưa cân bằng và hỗ trợ định hướng tự chăm sóc</div>
-          </div>
-          <button class="mini-btn">Gửi phản hồi</button>
-        </div>
-
-        <div class="glass contact-card">
-          <div class="icon">💬</div>
-          <h3>Gợi ý phần nâng cấp sau này</h3>
-          <p>
-            Bạn có thể bổ sung đăng nhập người dùng, lưu lịch sử khảo sát, dashboard theo lớp/trường, xuất báo cáo,
-            kết nối chatbot AI hoặc thống kê cho giáo viên/cố vấn học đường.
-          </p>
-          <div class="result-list" style="margin-top: 18px;">
-            <div class="result-item">✅ Thêm biểu đồ bằng Chart.js</div>
-            <div class="result-item">✅ Kết nối Google Sheets/Firebase để lưu dữ liệu</div>
-            <div class="result-item">✅ Tạo trang riêng: trang chủ, khảo sát, dashboard, thư viện</div>
-            <div class="result-item">✅ Tối ưu giao diện mobile để trình diễn dễ hơn</div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container glass footer-grid">
-      <div>
-        <div class="logo" style="margin-bottom: 10px;">
-          <div class="logo-mark">S</div>
-          <div>
-            <div>StuWellness</div>
-            <small style="color: var(--muted); font-weight: 600;">Student Wellness Analytics System</small>
-          </div>
-        </div>
-        <p>
-          Giao diện mẫu được thiết kế theo hướng hiện đại, bớt khô khan, tăng tương tác và phù hợp để tiếp tục phát triển cho dự án STEM.
-        </p>
-      </div>
-      <div>
-        <ul>
-          <li>• Trang chủ có hero section nổi bật</li>
-          <li>• Có khảo sát và trả kết quả ngay</li>
-          <li>• Có phần tư vấn và thư viện kiến thức</li>
-          <li>• Dễ tách thành nhiều file khi triển khai thật</li>
-        </ul>
+  <footer>
+    <div class="container footer-inner">
+      <div>Chúng info: 102-05-imnha.vn</div>
+      <div>Cam kết tự privacy toàn mật</div>
+      <div class="footer-social">
+        <span>ⓕ</span>
+        <span>◎</span>
+        <span>◉</span>
       </div>
     </div>
   </footer>
 
-  <script>
-    const form = document.getElementById('wellnessForm');
-    const healthScore = document.getElementById('healthScore');
-    const healthSummary = document.getElementById('healthSummary');
-    const resultStatus = document.getElementById('resultStatus');
-    const resultList = document.getElementById('resultList');
-    const aiAdvice = document.getElementById('aiAdvice');
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const name = document.getElementById('name').value.trim() || 'Bạn';
-      const role = document.getElementById('role').value;
-      const sleep = Number(document.getElementById('sleep').value);
-      const exercise = Number(document.getElementById('exercise').value);
-      const screen = Number(document.getElementById('screen').value);
-      const stress = Number(document.getElementById('stress').value);
-      const mood = Number(document.getElementById('mood').value);
-      const breakfast = Number(document.getElementById('breakfast').value);
-      const note = document.getElementById('note').value.trim();
-
-      let score = 100;
-      score -= sleep < 6 ? 20 : sleep < 8 ? 8 : 0;
-      score -= exercise < 30 ? 12 : exercise < 50 ? 6 : 0;
-      score -= screen >= 8 ? 18 : screen >= 6 ? 10 : screen >= 4 ? 5 : 0;
-      score -= stress >= 9 ? 20 : stress >= 7 ? 14 : stress >= 4 ? 8 : 3;
-      score += mood >= 9 ? 6 : mood >= 7 ? 3 : mood <= 2 ? -8 : -3;
-      score += breakfast >= 8 ? 4 : breakfast >= 5 ? 1 : -5;
-      score = Math.max(28, Math.min(98, score));
-
-      let statusText = '🟢 Ổn định';
-      let statusClass = 'status good';
-      let summary = `${name} đang có nền tảng sức khỏe tương đối tốt. Tiếp tục duy trì thói quen tích cực để giữ cân bằng giữa học tập và nghỉ ngơi.`;
-
-      if (score < 55) {
-        statusText = '🔴 Nguy cơ cao';
-        statusClass = 'status high';
-        summary = `${name} đang có một số dấu hiệu mất cân bằng rõ rệt. Nên điều chỉnh thời gian nghỉ ngơi, giảm áp lực và ưu tiên chăm sóc sức khỏe sớm hơn.`;
-      } else if (score < 75) {
-        statusText = '🟡 Cần chú ý';
-        statusClass = 'status warn';
-        summary = `${name} đang ở mức trung bình. Một vài thói quen sinh hoạt chưa tối ưu, cần cải thiện đều đặn để tránh ảnh hưởng đến học tập và tinh thần.`;
-      }
-
-      healthScore.textContent = `${score}/100`;
-      healthSummary.textContent = summary;
-      resultStatus.className = statusClass;
-      resultStatus.textContent = statusText;
-
-      const sleepText = sleep < 6 ? 'Bạn đang thiếu ngủ, cần ngủ sớm và đều đặn hơn.' : sleep < 8 ? 'Giấc ngủ tạm ổn nhưng vẫn nên cố gắng ngủ đủ 7-8 giờ.' : 'Giấc ngủ khá tốt, nên tiếp tục duy trì.';
-      const stressText = stress >= 7 ? 'Mức căng thẳng khá cao, nên có thời gian thư giãn và chia nhỏ việc học.' : stress >= 4 ? 'Stress ở mức trung bình, cần bố trí nghỉ ngắn hợp lý.' : 'Mức stress thấp, đây là một tín hiệu tích cực.';
-      const screenText = screen >= 6 ? 'Thời gian dùng điện thoại khá nhiều, nên giảm bớt để mắt và não được nghỉ.' : screen >= 4 ? 'Mức sử dụng thiết bị ở mức trung bình, nên xen kẽ vận động nhẹ.' : 'Bạn đang kiểm soát thời gian màn hình khá tốt.';
-
-      resultList.innerHTML = `
-        <div class="result-item"><strong>Đối tượng:</strong> ${role}</div>
-        <div class="result-item"><strong>Giấc ngủ:</strong> ${sleepText}</div>
-        <div class="result-item"><strong>Mức stress:</strong> ${stressText}</div>
-        <div class="result-item"><strong>Thiết bị số:</strong> ${screenText}</div>
-      `;
-
-      const advices = [];
-
-      if (sleep < 6) advices.push('💡 Hãy thử đặt mục tiêu ngủ sớm hơn 30 phút mỗi tối và tránh dùng điện thoại trước giờ ngủ.');
-      if (exercise < 30) advices.push('💡 Dành ít nhất 20-30 phút đi bộ, đạp xe hoặc vận động nhẹ mỗi ngày.');
-      if (screen >= 6) advices.push('💡 Sau mỗi 45-60 phút học hoặc dùng thiết bị, hãy nghỉ mắt 5 phút và đứng dậy vận động.');
-      if (stress >= 7) advices.push('💡 Nên chia nhỏ bài học, ưu tiên việc quan trọng trước và thử hít thở sâu khi thấy áp lực.');
-      if (mood <= 4) advices.push('💡 Nếu thường xuyên buồn hoặc mệt mỏi, hãy chia sẻ với người thân, bạn bè hoặc thầy cô để được hỗ trợ.');
-      if (breakfast <= 5) advices.push('💡 Ăn sáng đều hơn sẽ giúp cơ thể có năng lượng và tập trung tốt hơn vào đầu ngày.');
-      if (note) advices.push(`📝 Ghi chú của bạn: “${note}”. Hệ thống gợi ý bạn nên bắt đầu cải thiện từ vấn đề này trước.`);
-      if (advices.length < 3) {
-        advices.push('💡 Tiếp tục duy trì nhịp sinh hoạt ổn định và tự theo dõi sức khỏe hằng tuần.');
-        advices.push('💡 Có thể làm khảo sát định kỳ để xem sức khỏe tinh thần và thể chất thay đổi ra sao.');
-      }
-
-      aiAdvice.innerHTML = advices.slice(0, 5).map(item => `<div class="result-item">${item}</div>`).join('');
-    });
-  </script>
+  <div class="chat-bubble">Chat với Chúng Tôi 💬</div>
 </body>
 </html>
